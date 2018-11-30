@@ -1,5 +1,5 @@
 package Negocio;
 
-public class ControleDevolução {
+public class ControleDevolucao {
 
 }

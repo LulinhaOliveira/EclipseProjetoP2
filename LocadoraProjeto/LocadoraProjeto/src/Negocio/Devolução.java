@@ -1,6 +1,6 @@
 package Negocio;
 
-public class Devolução {
+public class Devolucao {
 	private Data data;
 	private Clientes cliente;
 	private ItensLocados itemLocado;

@@ -1,5 +1,5 @@
 package Dados;
 
-public class RepositorioDevolulçãoArquivo {
+public class RepositorioDevolucaoArquivo {
 
 }

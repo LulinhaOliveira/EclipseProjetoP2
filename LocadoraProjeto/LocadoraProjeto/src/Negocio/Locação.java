@@ -1,6 +1,6 @@
 package Negocio;
 
-public class Locação {
+public class Locacao {
 	private Funcionario funcionario;
 	private Clientes cliente;
 	private Data data;
