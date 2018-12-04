@@ -6,6 +6,7 @@ public class Veiculos {
 	private String modelo;
 	private String cor;
 	private int km_rodados;
+	private int ano;
 
 	//metodos de 'get' e 'set' caso o funcionario precise alterar um desses dados. OBS: Modelo ,Marca ,Placa não altera
 	
