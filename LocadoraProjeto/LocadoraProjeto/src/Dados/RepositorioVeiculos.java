@@ -1,33 +1,36 @@
 package Dados;
-import java.util.ArrayList;
+
 
 import Negocio.Veiculos;
 
 public class RepositorioVeiculos {
-	private ArrayList <Veiculos> listaVeiculos = new ArrayList<>();
+    private Veiculos [] veiculo = new Veiculos[100];
+   
+	
 
-	public ArrayList <Veiculos> getListaVeiculos() {
-		return listaVeiculos;
+    public Veiculos[] getVeiculo() {
+		return veiculo;
 	}
-
-	public void setListaVeiculos(ArrayList<Veiculos> listaVeiculos) {
-		this.listaVeiculos = listaVeiculos;
+	public void setVeiculo(Veiculos[] veiculo) {
+		this.veiculo = veiculo;
 	}
+	
+	
+	
+	public  void Inserir(Veiculos veiculo , int indice) {
+    	this.veiculo[indice] = veiculo;
+	}
+    public void Remover(int indice) {
+    	this.veiculo[indice] = null;
+    }
+    
+	public void  Atualizar(Veiculos veiculo ,int indice) {	
+    	this.veiculo[indice] = veiculo;
+    }
+    public Veiculos Procurar(int indice) {
+        return  veiculo[indice];      
+    }
 
-
-    public void Inserir(Veiculos veiculo) {
-    	listaVeiculos.add(veiculo);
-    }
-    public void Remover(Veiculos veiculo) {
-    	listaVeiculos.remove(veiculo);
-    }
-    @SuppressWarnings("unlikely-arg-type")
-	public void Atualizar(Veiculos veiculo) {	
-    	listaVeiculos.add(listaVeiculos.indexOf(veiculo.getPlaca()),veiculo);
-    }
-    public Veiculos Proucurar(Veiculos veiculo) {
-    	return listaVeiculos.get(listaVeiculos.indexOf(veiculo));
-    }
 
 }
 

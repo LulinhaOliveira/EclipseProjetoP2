@@ -1,12 +1,17 @@
 package Negocio;
 
+
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import Dados.RepositorioVeiculos;
 
 public class ControleVeiculos {
-    
+	static Calendar cal = GregorianCalendar.getInstance(); 
 	RepositorioVeiculos veiculo;
-	Veiculos veiculoAux;
-	
+
+	//Placa Deve Estar no Padrão
 	public static int ValidarPlaca(String placa) {
 		if(placa.length() != 8) {
 			return 0;
@@ -29,9 +34,24 @@ public class ControleVeiculos {
 		}
 		return 1;
 	}
-	public static int ValidarAtualização() {
+    //Ano Deve Ser Menor Que o Atual
+    public static int ValidarAno(int ano) {
+    	if(ano < cal.get(Calendar.YEAR)){
+    		return 0;
+    	}
+    	return 1;
+    }
+	public static int VerificarPlacaExiste(String placa , Veiculos [] veiculo) {
+		for(int i = 0 ; i < veiculo.length ; i++) {
+			if(placa == veiculo[i].getPlaca()) {
+				return 0;
+			}
+		}
 		return 1;
 	}
+	
+	
+	
 	
 	
 	public void Cadastro(Veiculos veiculo) {
@@ -39,33 +59,82 @@ public class ControleVeiculos {
 			return;
 		}else if(ValidarPlaca(veiculo.getPlaca()) == 0) {
 			return;
+		}else if(ValidarAno(veiculo.getAno()) == 0){	
+		    return;	
+		}else {	
+			for(int i = 0; i < this.veiculo.getVeiculo().length; i++) {
+				if(this.veiculo.getVeiculo()[i] == null) {
+				   this.veiculo.Inserir(veiculo, i);
+	               Arrays.sort(this.veiculo.getVeiculo());
+				   break;
+				}
+			}		
 		}
-	    this.veiculo.Inserir(veiculo);
 	}
     
-	@SuppressWarnings("unlikely-arg-type")
+
 	public void Remoção(String placa) {
-    	if(placa == null) {
-    		return;
-    	}
-       
-       veiculoAux = this.veiculo.getListaVeiculos().get(this.veiculo.getListaVeiculos().indexOf(placa)) ;
-       this.veiculo.Remover(veiculoAux);
-    }
+      if(placa == null || placa == "") {
+    	  return;
+      }else if(ValidarPlaca(placa) == 0) {
+    	  return;
+      }else {
+  		for(int i = 0 ; i < this.veiculo.getVeiculo().length ; i++) {
+     	   if(this.veiculo.getVeiculo()[i].getPlaca() == placa) {
+     		   this.veiculo.Remover(i);
+               Arrays.sort(this.veiculo.getVeiculo());
+     		   break;
+     	   }
+        }   	     	  
+      }	
+	}
     
 	public void Atualização(Veiculos veiculo) {
-    	if(veiculo == null) {
-    		return;
-    	}
-        this.veiculo.Atualizar(veiculo);
+		if(veiculo == null) {
+			return ;
+		}else if(ValidarPlaca(veiculo.getPlaca()) == 0) {
+			return;
+		}else if(ValidarAno(veiculo.getAno())==0){
+		    return;	
+		}else if(VerificarPlacaExiste(veiculo.getPlaca(),this.veiculo.getVeiculo()) == 0){
+			return;
+		}else {
+			for(int i = 0; i < this.veiculo.getVeiculo().length; i++) {
+				if(this.veiculo.getVeiculo()[i].getPlaca() == veiculo.getPlaca() ) {
+				   this.veiculo.Atualizar(veiculo, i);
+				   break;
+				}
+			}
+		}
     }
     
-	@SuppressWarnings("unlikely-arg-type")
-    public void Proucura(String placa) {
-    	if(placa == null) {
-    		return;
-    	}
-    	veiculoAux = this.veiculo.getListaVeiculos().get(this.veiculo.getListaVeiculos().indexOf(placa)) ;
-        this.veiculo.Proucurar(veiculoAux);
+
+    public Veiculos Procura(String placa) {
+		if(placa == null || placa == "") {
+			return null;
+		}else if(ValidarPlaca(placa) == 0) {
+			return null;
+		}else {
+	    	for(int i = 0; i < this.veiculo.getVeiculo().length; i++) {
+				if(this.veiculo.getVeiculo()[i].getPlaca() == placa) {
+				   return this.veiculo.Procurar(i);
+				}
+			}		
+		}
+		return null;
     }
+    
+    public void Imprimir(String placa) {
+    	Veiculos aux;
+    	aux = Procura(placa);
+    	System.out.println("Placa : " + aux.getPlaca());
+    	System.out.println("Ano : " + aux.getAno());
+    	System.out.println("Cor : " + aux.getCor());
+    	System.out.println("Marca : " + aux.getMarca());
+    	System.out.println("Modelo : " + aux.getModelo());
+    	System.out.println("Quilometro Rodados : " + aux.getKilometragem());
+    }
+
+
+
 }
